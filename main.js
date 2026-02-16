@@ -78,20 +78,33 @@ var disqus_config = function () {
 const tmModelURL = 'https://teachablemachine.withgoogle.com/models/4J1XiLKgo/';
 let model, labelContainer, maxPredictions;
 
-async function initTM() {
-    const modelURL = tmModelURL + 'model.json';
-    const metadataURL = tmModelURL + 'metadata.json';
-
-    model = await tmImage.load(modelURL, metadataURL);
-    maxPredictions = model.getTotalClasses();
-    labelContainer = document.getElementById('label-container');
-}
-initTM();
-
 const imageUpload = document.getElementById('image-upload');
 const imagePreviewContainer = document.getElementById('image-preview-container');
 const imagePreview = document.getElementById('image-preview');
 const predictButton = document.getElementById('predict-button');
+labelContainer = document.getElementById('label-container');
+
+// Disable upload until model is loaded
+imageUpload.disabled = true;
+labelContainer.innerHTML = "AI 모델 로딩 중... (Loading AI Model...)"
+
+async function initTM() {
+    const modelURL = tmModelURL + 'model.json';
+    const metadataURL = tmModelURL + 'metadata.json';
+
+    try {
+        model = await tmImage.load(modelURL, metadataURL);
+        maxPredictions = model.getTotalClasses();
+        // Enable upload and change text once model is loaded
+        imageUpload.disabled = false;
+        labelContainer.innerHTML = "AI 모델 로딩 완료! 사진을 올려주세요. (AI Model Loaded! Please upload a photo.)";
+    } catch (error) {
+        console.error("Error loading model:", error);
+        labelContainer.innerHTML = "AI 모델을 불러오는 데 실패했습니다. (Failed to load AI model.)";
+    }
+}
+initTM();
+
 
 imageUpload.addEventListener('change', (event) => {
   const file = event.target.files[0];
@@ -107,7 +120,12 @@ imageUpload.addEventListener('change', (event) => {
   }
 });
 
-predictButton.addEventListener('click', async () => {
+async function predict() {
+    if (!model) {
+        console.error("Model is not loaded yet.");
+        labelContainer.innerHTML = "아직 모델이 로딩 중입니다. 잠시만 기다려주세요. (Model is still loading. Please wait.)";
+        return;
+    }
     // predict can take in an image, video or canvas html element
     const prediction = await model.predict(imagePreview);
     
@@ -129,4 +147,6 @@ predictButton.addEventListener('click', async () => {
         resultText = "결과를 판독할 수 없습니다.";
     }
     labelContainer.innerHTML = resultText;
-});
+}
+
+predictButton.addEventListener('click', predict);
