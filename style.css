@@ -48,7 +48,7 @@ h1 {
   margin-bottom: 20px;
 }
 
-#theme-toggle {
+#toggle-theme {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -173,4 +173,38 @@ h1 {
 .disqus-section h2 {
   color: var(--text-color);
   margin-bottom: 20px;
+}
+
+/* Animal Face Test Styling */
+.animal-face-test-section {
+  width: 90%;
+  max-width: 500px;
+  margin: 40px 0;
+  padding: 30px;
+  background-color: var(--button-bg-color);
+  border: 1px solid var(--button-border-color);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.animal-face-test-section h2, .animal-face-test-section p {
+  color: var(--text-color);
+}
+
+#image-preview {
+  max-width: 100%;
+  border-radius: 5px;
+  border: 1px solid var(--input-border-color);
+}
+
+#label-container {
+  margin-top: 20px;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: var(--text-color);
 }

@@ -60,10 +60,10 @@ themeToggleBtn.addEventListener('click', () => {
   updateThemeToggleButtonText(); // Set initial button text
 })();
 
-// Disqus comments loading (add this at the end of main.js)
+// Disqus comments loading
 var disqus_config = function () {
-  this.page.url = window.location.href;  // Replace PAGE_URL with your page's canonical URL variable
-  this.page.identifier = 'lotto-generator-page'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  this.page.url = window.location.href;
+  this.page.identifier = 'lotto-generator-page';
 };
 
 (function() { // DON'T EDIT BELOW THIS LINE
@@ -72,3 +72,61 @@ var disqus_config = function () {
   s.setAttribute('data-timestamp', +new Date());
   (d.head || d.body).appendChild(s);
 })();
+
+
+// Teachable Machine Animal Face Test Logic
+const tmModelURL = 'https://teachablemachine.withgoogle.com/models/4J1XiLKgo/';
+let model, labelContainer, maxPredictions;
+
+async function initTM() {
+    const modelURL = tmModelURL + 'model.json';
+    const metadataURL = tmModelURL + 'metadata.json';
+
+    model = await tmImage.load(modelURL, metadataURL);
+    maxPredictions = model.getTotalClasses();
+    labelContainer = document.getElementById('label-container');
+}
+initTM();
+
+const imageUpload = document.getElementById('image-upload');
+const imagePreviewContainer = document.getElementById('image-preview-container');
+const imagePreview = document.getElementById('image-preview');
+const predictButton = document.getElementById('predict-button');
+
+imageUpload.addEventListener('change', (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      imagePreview.src = e.target.result;
+      imagePreviewContainer.style.display = 'block';
+      predictButton.style.display = 'block';
+      labelContainer.innerHTML = ''; // Clear previous results
+    };
+    reader.readAsDataURL(file);
+  }
+});
+
+predictButton.addEventListener('click', async () => {
+    // predict can take in an image, video or canvas html element
+    const prediction = await model.predict(imagePreview);
+    
+    // Find the prediction with the highest probability
+    let highestPrediction = { className: '', probability: 0 };
+    for (let i = 0; i < maxPredictions; i++) {
+        if (prediction[i].probability > highestPrediction.probability) {
+            highestPrediction = prediction[i];
+        }
+    }
+
+    // Display the result
+    let resultText = '';
+    if (highestPrediction.className === "강아지") {
+        resultText = "당신은 강아지상입니다! 멍멍!";
+    } else if (highestPrediction.className === "고양이") {
+        resultText = "당신은 고양이상입니다! 야옹~";
+    } else {
+        resultText = "결과를 판독할 수 없습니다.";
+    }
+    labelContainer.innerHTML = resultText;
+});
