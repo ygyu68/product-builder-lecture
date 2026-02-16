@@ -2,6 +2,14 @@ const generateBtn = document.getElementById('generate');
 const numbersDiv = document.getElementById('numbers');
 const themeToggleBtn = document.getElementById('theme-toggle');
 
+function getColorClass(number) {
+  if (number <= 10) return 'color-band-1';
+  if (number <= 20) return 'color-band-2';
+  if (number <= 30) return 'color-band-3';
+  if (number <= 40) return 'color-band-4';
+  return 'color-band-5';
+}
+
 // Lotto number generation
 generateBtn.addEventListener('click', () => {
   const lottoNumbers = new Set();
@@ -16,7 +24,7 @@ generateBtn.addEventListener('click', () => {
   numbersDiv.innerHTML = ''; // Clear previous numbers
   sortedNumbers.forEach(number => {
     const numberCircle = document.createElement('div');
-    numberCircle.classList.add('number-circle');
+    numberCircle.classList.add('number-circle', getColorClass(number));
     numberCircle.textContent = number;
     numbersDiv.appendChild(numberCircle);
   });
