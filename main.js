@@ -10,6 +10,14 @@ function getColorClass(number) {
   return 'color-band-5';
 }
 
+function updateThemeToggleButtonText() {
+  if (document.body.classList.contains('dark-mode')) {
+    themeToggleBtn.textContent = '화이트모드'; // White Mode
+  } else {
+    themeToggleBtn.textContent = '다크모드'; // Dark Mode
+  }
+}
+
 // Lotto number generation
 generateBtn.addEventListener('click', () => {
   const lottoNumbers = new Set();
@@ -40,6 +48,7 @@ themeToggleBtn.addEventListener('click', () => {
   } else {
     localStorage.setItem('theme', 'light');
   }
+  updateThemeToggleButtonText(); // Update button text after toggling
 });
 
 // Apply saved theme on page load
@@ -48,4 +57,5 @@ themeToggleBtn.addEventListener('click', () => {
   if (savedTheme === 'dark') {
     document.body.classList.add('dark-mode');
   }
+  updateThemeToggleButtonText(); // Set initial button text
 })();
