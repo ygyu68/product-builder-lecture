@@ -1,6 +1,6 @@
 const generateBtn = document.getElementById('generate');
 const numbersDiv = document.getElementById('numbers');
-const themeToggleBtn = document.getElementById('theme-toggle');
+const themeToggleBtn = document.getElementById('toggle-theme'); // Updated ID
 
 function getColorClass(number) {
   if (number <= 10) return 'color-band-1';
@@ -58,4 +58,17 @@ themeToggleBtn.addEventListener('click', () => {
     document.body.classList.add('dark-mode');
   }
   updateThemeToggleButtonText(); // Set initial button text
+})();
+
+// Disqus comments loading (add this at the end of main.js)
+var disqus_config = function () {
+  this.page.url = window.location.href;  // Replace PAGE_URL with your page's canonical URL variable
+  this.page.identifier = 'lotto-generator-page'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://YOUR_DISQUS_SHORTNAME.disqus.com/embed.js'; // !!! IMPORTANT: Replace YOUR_DISQUS_SHORTNAME with your actual Disqus shortname !!!
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
 })();

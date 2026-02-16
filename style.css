@@ -96,6 +96,7 @@ h1 {
   width: 90%;
   max-width: 500px;
   margin-top: 40px; /* Space from above elements */
+  margin-bottom: 40px; /* Add space below form */
   box-sizing: border-box; /* Include padding in width */
   border: 1px solid var(--button-border-color);
 }
@@ -154,4 +155,22 @@ h1 {
 
 #contact-form button[type="submit"]:hover {
   background-color: #0056b3;
+}
+
+/* Disqus Section Styling */
+.disqus-section {
+  width: 90%;
+  max-width: 800px; /* Disqus often looks better wider */
+  margin-top: 40px;
+  padding: 20px;
+  background-color: var(--button-bg-color);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--button-border-color);
+  text-align: center;
+}
+
+.disqus-section h2 {
+  color: var(--text-color);
+  margin-bottom: 20px;
 }
