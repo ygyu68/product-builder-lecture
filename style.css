@@ -3,6 +3,8 @@
   --text-color: #333;
   --button-bg-color: #fff;
   --button-border-color: #ccc;
+  --input-bg-color: #fff; /* New variable for input background */
+  --input-border-color: #ddd; /* New variable for input border */
 }
 
 body {
@@ -10,9 +12,11 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  height: 100vh;
+  /* Removed justify-content: center; for new content */
+  height: auto; /* Allow body to grow with content */
+  min-height: 100vh; /* Ensure it takes at least full viewport height */
   margin: 0;
+  padding-bottom: 50px; /* Add some padding at the bottom for scrollability */
   background-color: var(--background-color);
   color: var(--text-color);
   transition: background-color 0.3s, color 0.3s;
@@ -24,10 +28,13 @@ body.dark-mode {
   --text-color: #f0f0f0;
   --button-bg-color: #555;
   --button-border-color: #777;
+  --input-bg-color: #444; /* Dark mode input background */
+  --input-border-color: #666; /* Dark mode input border */
 }
 
 h1 {
   color: var(--text-color);
+  margin-top: 50px; /* Add some space from the top */
 }
 
 #generate {
@@ -57,6 +64,7 @@ h1 {
 #numbers {
   display: flex;
   gap: 10px;
+  margin-bottom: 40px; /* Add space below numbers */
 }
 
 .number-circle {
@@ -77,3 +85,73 @@ h1 {
 .color-band-3 { background-color: #e55c5c; } /* 21-30 */
 .color-band-4 { background-color: #8c8c8c; } /* 31-40 */
 .color-band-5 { background-color: #4CAF50; } /* 41-45 */
+
+
+/* Contact Form Styling */
+.contact-form-section {
+  background-color: var(--button-bg-color); /* Use button bg for form background */
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 500px;
+  margin-top: 40px; /* Space from above elements */
+  box-sizing: border-box; /* Include padding in width */
+  border: 1px solid var(--button-border-color);
+}
+
+.contact-form-section h2 {
+  text-align: center;
+  color: var(--text-color);
+  margin-bottom: 25px;
+}
+
+#contact-form {
+  display: flex;
+  flex-direction: column;
+}
+
+#contact-form label {
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+#contact-form input[type="text"],
+#contact-form input[type="email"],
+#contact-form textarea {
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid var(--input-border-color);
+  border-radius: 5px;
+  font-size: 1em;
+  background-color: var(--input-bg-color);
+  color: var(--text-color);
+  transition: border-color 0.3s;
+}
+
+#contact-form input[type="text"]:focus,
+#contact-form input[type="email"]:focus,
+#contact-form textarea:focus {
+  border-color: #007bff; /* Highlight on focus */
+  outline: none;
+}
+
+#contact-form textarea {
+  resize: vertical;
+}
+
+#contact-form button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#contact-form button[type="submit"]:hover {
+  background-color: #0056b3;
+}

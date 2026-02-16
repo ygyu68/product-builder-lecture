@@ -11,6 +11,23 @@
   <button id="theme-toggle">Toggle Theme</button>
   <button id="generate">로또 번호 받기</button>
   <div id="numbers"></div>
+
+  <div class="contact-form-section">
+    <h2>제휴 문의 (Affiliate Inquiry)</h2>
+    <form action="https://formspree.io/f/maqdjyny" method="POST" id="contact-form">
+      <label for="name">이름 (Name):</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="email">이메일 (Email):</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="message">메시지 (Message):</label>
+      <textarea id="message" name="message" rows="5" required></textarea>
+
+      <button type="submit">문의 보내기 (Send Inquiry)</button>
+    </form>
+  </div>
+
   <script defer type="text/javascript" src="/main.js"></script>
 </body>
 </html>
