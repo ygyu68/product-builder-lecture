@@ -75,61 +75,55 @@ var disqus_config = function () {
 
 
 // Teachable Machine Animal Face Test Logic
-const tmModelURL = 'https://teachablemachine.withgoogle.com/models/4J1XiLKgo/';
-let model, labelContainer, maxPredictions;
+const URL = "https://teachablemachine.withgoogle.com/models/4J1XiLKgo/"; // Provided by user
+let model, webcam, labelContainer, maxPredictions;
+const startWebcamButton = document.getElementById('start-webcam-button');
 
-const imageUpload = document.getElementById('image-upload');
-const imagePreviewContainer = document.getElementById('image-preview-container');
-const imagePreview = document.getElementById('image-preview');
-const predictButton = document.getElementById('predict-button');
-labelContainer = document.getElementById('label-container');
+// Function to initialize the webcam and load the model
+async function init() {
+    startWebcamButton.disabled = true; // Disable button while loading
+    labelContainer = document.getElementById('label-container');
+    labelContainer.innerHTML = "AI 모델 및 웹캠 로딩 중... (Loading AI Model and Webcam...)";
 
-// Disable upload until model is loaded
-imageUpload.disabled = true;
-labelContainer.innerHTML = "AI 모델 로딩 중... (Loading AI Model...)"
-
-async function initTM() {
-    const modelURL = tmModelURL + 'model.json';
-    const metadataURL = tmModelURL + 'metadata.json';
+    const modelURL = URL + "model.json";
+    const metadataURL = URL + "metadata.json";
 
     try {
         model = await tmImage.load(modelURL, metadataURL);
         maxPredictions = model.getTotalClasses();
-        // Enable upload and change text once model is loaded
-        imageUpload.disabled = false;
-        labelContainer.innerHTML = "AI 모델 로딩 완료! 사진을 올려주세요. (AI Model Loaded! Please upload a photo.)";
+
+        // Convenience function to setup a webcam
+        const flip = true; // whether to flip the webcam
+        webcam = new tmImage.Webcam(200, 200, flip); // width, height, flip
+        await webcam.setup(); // request access to the webcam
+        await webcam.play();
+        window.requestAnimationFrame(loop);
+
+        // append elements to the DOM
+        document.getElementById("webcam-container").appendChild(webcam.canvas);
+        labelContainer.innerHTML = "웹캠 준비 완료! (Webcam Ready!)";
     } catch (error) {
-        console.error("Error loading model:", error);
-        labelContainer.innerHTML = "AI 모델을 불러오는 데 실패했습니다. (Failed to load AI model.)";
+        console.error("Error loading model or setting up webcam:", error);
+        labelContainer.innerHTML = "모델 또는 웹캠을 불러오는 데 실패했습니다. (Failed to load model or webcam.)";
+        startWebcamButton.disabled = false; // Re-enable button to try again
     }
 }
-initTM();
 
+// Loop function to continuously update webcam and predict
+async function loop() {
+    webcam.update(); // update the webcam frame
+    await predict();
+    window.requestAnimationFrame(loop);
+}
 
-imageUpload.addEventListener('change', (event) => {
-  const file = event.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      imagePreview.src = e.target.result;
-      imagePreviewContainer.style.display = 'block';
-      predictButton.style.display = 'block';
-      labelContainer.innerHTML = ''; // Clear previous results
-    };
-    reader.readAsDataURL(file);
-  }
-});
-
+// Predict function to run the webcam image through the model
 async function predict() {
-    if (!model) {
-        console.error("Model is not loaded yet.");
-        labelContainer.innerHTML = "아직 모델이 로딩 중입니다. 잠시만 기다려주세요. (Model is still loading. Please wait.)";
+    if (!model || !webcam || !webcam.canvas) {
+        // Model or webcam not ready yet
         return;
     }
-    // predict can take in an image, video or canvas html element
-    const prediction = await model.predict(imagePreview);
+    const prediction = await model.predict(webcam.canvas);
     
-    // Find the prediction with the highest probability
     let highestPrediction = { className: '', probability: 0 };
     for (let i = 0; i < maxPredictions; i++) {
         if (prediction[i].probability > highestPrediction.probability) {
@@ -137,16 +131,17 @@ async function predict() {
         }
     }
 
-    // Display the result
     let resultText = '';
-    if (highestPrediction.className === "강아지") {
-        resultText = "당신은 강아지상입니다! 멍멍!";
-    } else if (highestPrediction.className === "고양이") {
-        resultText = "당신은 고양이상입니다! 야옹~";
+    // Adapt result to Korean messages
+    if (highestPrediction.className.includes("강아지")) { // Check for "강아지" within the class name
+        resultText = `당신은 강아지상입니다! 멍멍! (${(highestPrediction.probability * 100).toFixed(2)}%)`;
+    } else if (highestPrediction.className.includes("고양이")) { // Check for "고양이" within the class name
+        resultText = `당신은 고양이상입니다! 야옹~ (${(highestPrediction.probability * 100).toFixed(2)}%)`;
     } else {
-        resultText = "결과를 판독할 수 없습니다.";
+        resultText = `결과를 판독할 수 없습니다. (${highestPrediction.className}: ${(highestPrediction.probability * 100).toFixed(2)}%)`;
     }
     labelContainer.innerHTML = resultText;
 }
 
-predictButton.addEventListener('click', predict);
+// Event listener for the start button
+startWebcamButton.addEventListener('click', init);

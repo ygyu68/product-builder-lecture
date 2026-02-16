@@ -196,15 +196,26 @@ h1 {
   color: var(--text-color);
 }
 
-#image-preview {
-  max-width: 100%;
+/* Removed #image-preview */
+/* Removed #label-container margin-top */
+#label-container {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+#webcam-container canvas {
   border-radius: 5px;
   border: 1px solid var(--input-border-color);
 }
 
-#label-container {
-  margin-top: 20px;
-  font-size: 1.5em;
-  font-weight: bold;
+#start-webcam-button {
+  padding: 10px 20px;
+  font-size: 1.2em;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 1px solid var(--button-border-color);
+  background-color: var(--button-bg-color);
   color: var(--text-color);
+  margin-top: 10px;
 }

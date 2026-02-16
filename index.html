@@ -6,6 +6,7 @@
   <title>Lotto Number Generator</title>
   <link href='/style.css' rel='stylesheet'>
   <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachable-machine-image.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
 </head>
 <body>
   <h1>Lotto Number Generator</h1>
@@ -36,14 +37,10 @@
 
   <div class="animal-face-test-section">
     <h2>동물상 테스트 (Animal Face Test)</h2>
-    <p>강아지상일까, 고양이상일까? 사진을 업로드하여 확인해보세요!</p>
-    <input type="file" id="image-upload" accept="image/*">
-    <div id="image-preview-container" style="display:none;">
-      <img id="image-preview" width="300" />
-    </div>
-    <button id="predict-button" style="display:none;">결과 보기 (See Result)</button>
+    <p>웹캠을 이용해 당신의 동물상을 확인해보세요!</p>
+    <button type="button" id="start-webcam-button">시작 (Start)</button>
+    <div id="webcam-container"></div>
     <div id="label-container"></div>
-
   </div>
 
   <script defer type="text/javascript" src="/main.js"></script>
