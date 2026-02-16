@@ -1,1 +1,64 @@
-/* Add styles here */
+:root {
+  --background-color: #f0f0f0;
+  --text-color: #333;
+  --button-bg-color: #fff;
+  --button-border-color: #ccc;
+  --lotto-number-bg-color: #4CAF50;
+}
+
+body {
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark-mode {
+  --background-color: #333;
+  --text-color: #f0f0f0;
+  --button-bg-color: #555;
+  --button-border-color: #777;
+}
+
+h1 {
+  color: var(--text-color);
+}
+
+#generate, #theme-toggle {
+  padding: 10px 20px;
+  font-size: 1.2em;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 1px solid var(--button-border-color);
+  background-color: var(--button-bg-color);
+  color: var(--text-color);
+  margin-bottom: 10px;
+}
+
+#theme-toggle {
+  margin-bottom: 20px;
+}
+
+#numbers {
+  display: flex;
+  gap: 10px;
+}
+
+.number-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: white;
+  background-color: var(--lotto-number-bg-color);
+}
