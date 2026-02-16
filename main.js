@@ -68,7 +68,7 @@ var disqus_config = function () {
 
 (function() { // DON'T EDIT BELOW THIS LINE
   var d = document, s = d.createElement('script');
-  s.src = 'https://YOUR_DISQUS_SHORTNAME.disqus.com/embed.js'; // !!! IMPORTANT: Replace YOUR_DISQUS_SHORTNAME with your actual Disqus shortname !!!
+  s.src = 'https://product-builder-a57sshtpbn.disqus.com/embed.js';
   s.setAttribute('data-timestamp', +new Date());
   (d.head || d.body).appendChild(s);
 })();
