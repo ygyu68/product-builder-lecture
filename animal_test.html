@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>동물상 테스트</title>
+  <link href='/style.css' rel='stylesheet'>
+  <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachable-machine-image.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+</head>
+<body>
+  <div class="animal-face-test-section">
+    <h2>동물상 테스트 (Animal Face Test)</h2>
+    <p>사진을 업로드하여 당신의 동물상을 확인해보세요!</p>
+    <input type="file" id="image-upload" accept="image/*">
+    <button type="button" id="start-test-button" disabled>결과 확인 (Check Result)</button>
+    <div id="image-preview-container"></div>
+    <div id="label-container"></div>
+  </div>
+
+  <script defer type="text/javascript" src="/animal_test.js"></script>
+</body>
+</html>
