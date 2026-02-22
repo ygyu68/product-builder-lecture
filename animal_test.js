@@ -80,14 +80,14 @@ imageUploadInput.addEventListener('change', function(event) {
                 imagePreviewContainer.appendChild(uploadedImage); // Append the canvas for preview
 
                 startTestButton.disabled = false; // Enable the test button
-                labelContainer.innerHTML = "이미지 업로드 완료! '결과 확인' 버튼을 눌러주세요. (Image uploaded! Click 'Check Result' button.)";
+                labelContainer.innerHTML = "이미지 업로드 완료! '결과 확인' 버튼을 눌러주세요.";
             };
         };
         reader.readAsDataURL(file);
     } else {
         startTestButton.disabled = true;
-        imagePreviewContainer.innerHTML = '';
-        labelContainer.innerHTML = "이미지를 업로드해주세요. (Please upload an image.)";
+        imagePreviewContainer.innerHTML = '<p>사진을 업로드하면 여기에 표시됩니다.</p>';
+        labelContainer.innerHTML = "이미지를 업로드해주세요.";
     }
 });
 
